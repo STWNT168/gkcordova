@@ -1,0 +1,31 @@
+<?xml version='1.0' encoding='utf-8'?>
+<widget id="com.gksprint.flashcards" version="1.0.0" xmlns="http://www.w3.org/ns/widgets" xmlns:cdv="http://cordova.apache.org/ns/1.0">
+    <name>GK Memory Deck</name>
+    <description>Spaced-repetition flashcards for the SSC GK-GS question bank, with progress saved on-device.</description>
+    <author email="you@example.com" href="https://example.com">You</author>
+    <content src="index.html" />
+    <access origin="*" />
+    <allow-intent href="http://*/*" />
+    <allow-intent href="https://*/*" />
+
+    <preference name="DisallowOverscroll" value="true" />
+    <preference name="Orientation" value="portrait" />
+    <preference name="BackgroundColor" value="0xff12151c" />
+    <preference name="StatusBarBackgroundColor" value="#12151c" />
+    <preference name="StatusBarStyle" value="lightcontent" />
+    <preference name="android-minSdkVersion" value="24" />
+    <preference name="AndroidXEnabled" value="true" />
+
+    <platform name="android">
+        <allow-intent href="market:*" />
+        <preference name="AndroidLaunchMode" value="singleTop" />
+    </platform>
+
+    <platform name="ios">
+        <allow-intent href="itms:*" />
+        <allow-intent href="itms-apps:*" />
+        <preference name="deployment-target" value="13.0" />
+    </platform>
+
+    <plugin name="cordova-plugin-whitelist" spec="^1.3.5" />
+</widget>

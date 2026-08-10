@@ -1,0 +1,26 @@
+{
+  "name": "gk-memory-deck",
+  "displayName": "GK Memory Deck",
+  "version": "1.0.0",
+  "description": "Spaced-repetition flashcard app for the SSC GK-GS question bank, packaged with Cordova.",
+  "private": true,
+  "scripts": {
+    "android": "cordova run android",
+    "android:build": "cordova build android",
+    "android:release": "cordova build android --release",
+    "ios": "cordova run ios",
+    "browser": "cordova run browser"
+  },
+  "devDependencies": {
+    "cordova": "^12.0.0",
+    "cordova-android": "^12.0.1"
+  },
+  "cordova": {
+    "platforms": [
+      "android"
+    ],
+    "plugins": {
+      "cordova-plugin-whitelist": {}
+    }
+  }
+}
