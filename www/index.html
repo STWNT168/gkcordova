@@ -1,0 +1,89 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover">
+<meta http-equiv="Content-Security-Policy" content="default-src 'self' data: gap: https://ssl.gstatic.com 'unsafe-inline' 'unsafe-eval'; style-src 'self' 'unsafe-inline' https://fonts.googleapis.com; font-src 'self' https://fonts.gstatic.com; img-src 'self' data:; connect-src 'self';">
+<title>GK Memory Deck</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Shippori+Mincho:wght@500;700;800&family=Zen+Kaku+Gothic+New:wght@400;500;700;900&family=JetBrains+Mono:wght@400;600&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="css/style.css">
+</head>
+<body>
+
+<div class="wrap" id="home">
+  <div class="eyebrow">Spaced Recall · 反復</div>
+  <h1>GK Memory Deck</h1>
+  <p class="sub">All <b id="totalCount">…</b> questions from your SSC GK-GS bank, scheduled with the same spaced-repetition algorithm behind Anki, saved right on your phone — no internet needed once installed.</p>
+
+  <div id="loadingBox" class="loading"><div class="spin"></div>Loading the question bank…</div>
+  <div id="errorBox" class="loading" style="display:none;color:var(--hanko)"></div>
+
+  <div id="mainBox" style="display:none">
+    <div class="stat-row">
+      <div class="stat"><span class="num" id="statDue">0</span><span class="lbl">Due now</span></div>
+      <div class="stat"><span class="num" id="statNew">0</span><span class="lbl">New today</span></div>
+      <div class="stat"><span class="num" id="statMastered">0%</span><span class="lbl">Mastered</span></div>
+      <div class="stat"><span class="num" id="statTotal">0</span><span class="lbl">Total cards</span></div>
+    </div>
+
+    <button class="study-btn" id="studyBtn">Start session<small id="studyBtnSub"></small></button>
+
+    <details class="method-details">
+      <summary>How the scheduling works</summary>
+      <div class="method-body">
+        <div class="m-row"><b>Active recall</b> — you answer before seeing the solution, every card, every time. That retrieval effort is what builds memory, not re-reading.</div>
+        <div class="m-row"><b>Spaced repetition (SM-2)</b> — grade each card Again / Hard / Good / Easy. Good answers push the next review further out; misses bring it right back. Intervals grow automatically as a card sticks.</div>
+        <div class="m-row"><b>New-card cap</b> — a daily limit on brand-new cards keeps today's queue realistic instead of dumping all 8,000+ at once. Raise or lower it below.</div>
+        <div class="m-row"><b>Honest note</b> — truly memorizing ~8,200 real exam questions isn't a 7-day job even with perfect technique. This deck is built to run past the week: start now, keep clearing "due" daily, and retention compounds.</div>
+      </div>
+    </details>
+
+    <div class="settings-row">
+      <span>New cards per day</span>
+      <input type="number" id="newCapInput" min="10" max="500" step="10">
+    </div>
+
+    <div class="section-label">By topic</div>
+    <div id="topicList"></div>
+
+    <span class="reset-link" id="resetLink">Reset all scheduling data</span>
+  </div>
+
+  <footer>
+    <div class="foot-note">Cards are drawn from the topic groupings in your 7-day sprint. Question text is extracted directly from your uploaded file — always double-check against the source PDF for anything you plan to rely on.</div>
+  </footer>
+</div>
+
+<div class="study-screen" id="studyScreen">
+  <div class="study-top">
+    <span class="close-x" id="closeStudy">✕</span>
+    <div class="prog"><div class="prog-fill" id="progFill" style="width:0%"></div></div>
+    <span class="count" id="studyCount">0/0</span>
+  </div>
+  <div class="card-area" id="cardArea">
+    <div class="card-topic" id="cardTopic"></div>
+    <div class="card-q" id="cardQ"></div>
+    <div class="card-answer" id="cardAnswer">
+      <div class="ans-label">Correct answer</div>
+      <div class="ans-letter" id="ansLetter"></div>
+    </div>
+  </div>
+  <div class="study-bottom">
+    <button class="reveal-btn" id="revealBtn">Show answer</button>
+    <div class="grade-row" id="gradeRow" style="display:none">
+      <button class="again" data-g="1">Again<span class="gl">&lt;1d</span></button>
+      <button class="hard" data-g="2">Hard<span class="gl" id="hardLbl"></span></button>
+      <button class="good" data-g="3">Good<span class="gl" id="goodLbl"></span></button>
+      <button class="easy" data-g="4">Easy<span class="gl" id="easyLbl"></span></button>
+    </div>
+  </div>
+</div>
+
+
+
+
+<script src="cordova.js"></script>
+<script src="js/app.js"></script>
+</body>
+</html>
