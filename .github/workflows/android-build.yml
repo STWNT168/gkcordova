@@ -13,6 +13,7 @@ on:
 
 env:
   ANDROID_SDK_ROOT: ${{ runner.tool_cache }}/android-sdk
+  ANDROID_HOME: ${{ runner.tool_cache }}/android-sdk
 
 jobs:
   build:
@@ -32,19 +33,22 @@ jobs:
           distribution: temurin
           java-version: '17'
 
-      - name: Install Android SDK command-line tools
+      - name: Show Java/Node versions
+        run: |
+          java -version || true
+          node -v || true
+          npm -v || true
+
+      - name: Install Android SDK command-line tools (robust)
         run: |
           sudo apt-get update
           sudo apt-get install -y unzip wget
           mkdir -p $ANDROID_SDK_ROOT/cmdline-tools
-          wget -qO /tmp/cmdline-tools.zip https://dl.google.com/android/repository/commandlinetools-linux-*.zip || true
-          # If the above wildcard fails on runner, download a known release:
-          if [ ! -f /tmp/cmdline-tools.zip ]; then
-            wget -qO /tmp/cmdline-tools.zip https://dl.google.com/android/repository/commandlinetools-linux-9477386_latest.zip
-          fi
-          unzip -q /tmp/cmdline-tools.zip -d $ANDROID_SDK_ROOT/cmdline-tools
+          # Download a known stable commandlinetools package
+          wget -qO /tmp/cmdline-tools.zip https://dl.google.com/android/repository/commandlinetools-linux-9477386_latest.zip
+          unzip -q /tmp/cmdline-tools.zip -d /tmp/cmdline-tools
           mkdir -p $ANDROID_SDK_ROOT/cmdline-tools/latest
-          mv $ANDROID_SDK_ROOT/cmdline-tools/cmdline-tools/* $ANDROID_SDK_ROOT/cmdline-tools/latest/ || true
+          mv /tmp/cmdline-tools/cmdline-tools/* $ANDROID_SDK_ROOT/cmdline-tools/latest/ || true
           export PATH=$ANDROID_SDK_ROOT/cmdline-tools/latest/bin:$PATH
           yes | sdkmanager --sdk_root=${ANDROID_SDK_ROOT} --licenses || true
           sdkmanager --sdk_root=${ANDROID_SDK_ROOT} "platform-tools" "platforms;android-33" "build-tools;33.0.2"
@@ -68,6 +72,12 @@ jobs:
         run: |
           npx cordova platform rm android || true
           npx cordova platform add android@latest --save
+
+      - name: Show Gradle and Groovy versions (debug)
+        run: |
+          cd platforms/android || true
+          ./gradlew --version || true
+          cd - || true
 
       - name: Build Android debug APK
         run: |
