@@ -2,12 +2,13 @@ name: Build Android APK
 
 on:
   push:
-    branches: [ (root)]
+    branches: [ "(root)" ]
   workflow_dispatch: {}
 
 jobs:
   build:
     runs-on: ubuntu-latest
+
     steps:
       - name: Checkout
         uses: actions/checkout@v4
@@ -21,7 +22,12 @@ jobs:
         uses: actions/setup-java@v4
         with:
           distribution: temurin
-          java-version: '17'
+          java-version: '11'
+
+      - name: Set up Gradle
+        uses: gradle/actions/setup-gradle@v4
+        with:
+          gradle-version: '7.6'
 
       - name: Install Cordova CLI
         run: npm install -g cordova
